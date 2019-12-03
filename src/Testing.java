@@ -17,11 +17,7 @@ public class Testing {
 
     public static void main(String[] args) {
 
-        CostMatrix matrix = GenerateRandomEuclidianCostMatrix(4, 20);
-        matrix.printMatrix();
-        Path p = Greedy.TSP(matrix);
-        p.printPath();
-
+        Correctness.circularCorrectness(Brute_Force::TSP);
         // run the whole experiment at least twice, and expect to throw away the data from the earlier runs, before java has fully optimized
         //runFullExperiment("BruteForceLCS-Exp1-ThrowAway.txt");
         //runFullExperiment("BruteForceLCS-Exp2.txt");

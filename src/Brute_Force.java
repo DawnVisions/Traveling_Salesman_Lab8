@@ -1,11 +1,12 @@
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Brute_Force {
 
     public static Path TSP(CostMatrix costMatrix)
     {
-        //  Initialize path 0 -> 1 -> 2 -> ... -> n -> 0
+        //  Initialize path 0 -> 1 -> 2 -> ... n -> 0
         int[] path = new int[costMatrix.numberVertices+1];
         for(int i = 0; i< costMatrix.numberVertices; i++)
         {
@@ -15,7 +16,7 @@ public class Brute_Force {
         int[] currentShortest = path.clone();
 
         //  Initialize cost to cost of the incremental path
-        double cost = calcuatePathCost(path, costMatrix);
+        double cost = calculateArrayPathCost(path, costMatrix);
 
         //  Heap's iterative algorithm to get all path permutations
         //  Changes made to not swap the first or last vertex
@@ -28,7 +29,7 @@ public class Brute_Force {
             if (indexes[i] < i) {
                 swap(path, i % 2 != 0 ?  1: indexes[i], i);
                 //  Check if cost of the current permutation is less that the current cost
-                if (calcuatePathCost(path, costMatrix) < cost)
+                if (calculateArrayPathCost(path, costMatrix) < cost)
                 {
                     currentShortest = path.clone();
                 }
@@ -40,10 +41,18 @@ public class Brute_Force {
                 i++;
             }
         }
-        return new Path(currentShortest, Math.floor(cost*100)/100);
+
+        //  Create new Path from currentShortest array
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int j = 0; j<currentShortest.length; j++)
+        {
+            list.add(currentShortest[j]);
+        }
+
+        return new Path(list, costMatrix);
     }
 
-    private static double calcuatePathCost(int[] path, CostMatrix costMatrix) {
+    private static double calculateArrayPathCost(int[] path, CostMatrix costMatrix) {
         double cost = 0;
         for ( int i = 0; i<path.length-1; i++)
         {

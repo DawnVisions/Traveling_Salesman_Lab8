@@ -7,6 +7,7 @@ public class CostMatrix {
     int numberVertices;
     double matrix[][];
     Point[] vertices;
+    Path correctForCircular;
 
     public CostMatrix(int numberVertices) {
         this.numberVertices = numberVertices;
@@ -60,25 +61,27 @@ public class CostMatrix {
     {
         //  Find the angle needed to place each vertex equally around the circle
         double angle = 360/numberVertices;
-        System.out.println(angle);
         //  Use sin and cos identities to get x,y coordinates for each angle around the circle
         double currentAngle = 0;
-        ArrayList<Point> sortedVertices = new ArrayList<Point>();
+        ArrayList<Vertex> sortedVertices = new ArrayList<>();
         for (int i = 0; i<numberVertices; i++)
         {
             double radian = currentAngle*Math.PI/180;
             double x = Math.cos(radian)*radius;
             double y = Math.sin(radian)*radius;
-           sortedVertices.add(new Point((int) Math.round(x), (int)Math.round(y)));
+            sortedVertices.add(new Vertex((int) Math.round(x), (int)Math.round(y), i));
             currentAngle += angle;
         }
         //  Shuffle the vertices so they are in a random order around the circle
         Collections.shuffle(sortedVertices);
         //  Store the shuffled result in the vertices array
         vertices = new Point[numberVertices];
+        correctForCircular = new Path(numberVertices);
         for(int i = 0; i<numberVertices; i++)
         {
-            vertices[i] = sortedVertices.get(i);
+            vertices[i] = sortedVertices.get(i).getPoint();
+            int number = sortedVertices.get(i).getNumber();
+            correctForCircular.vertices.set(number, i);
         }
         //  Calculate the distance between each vertex
         pointToPointDistancesToMatrix();

@@ -5,7 +5,7 @@ public class Greedy {
     public static Path TSP(CostMatrix costMatrix)
     {
         //  Initialize path
-        int[] path = new int[costMatrix.numberVertices+1];
+        Path path = new Path();
 
         //  toVisit list contains vertices to visit
         ArrayList<Integer> toVisit = new ArrayList<>();
@@ -17,6 +17,7 @@ public class Greedy {
         //  For each current vertex, find the nextVertex out of toVist
         //      that has the smallest cost
         int currentVertex = 0;
+        path.vertices.add(currentVertex);
         for( int i = 1; i < costMatrix.numberVertices; i++)
         {
             int indexOfNext = 0;
@@ -29,22 +30,16 @@ public class Greedy {
                     nextVertex = toVisit.get(j);
                 }
             }
-            path[i] = nextVertex;
+            path.vertices.add(nextVertex);
             toVisit.remove(indexOfNext);
             currentVertex = nextVertex;
         }
+        path.vertices.add(0);
 
         //   Calculate cost and return path
-        double cost = calcuatePathCost(path, costMatrix);
-        return new Path(path, Math.floor(cost*100)/100);
+        path.calculatePathCost(costMatrix);
+        return path;
     }
 
-    private static double calcuatePathCost(int[] path, CostMatrix costMatrix) {
-        double cost = 0;
-        for ( int i = 0; i<path.length-1; i++)
-        {
-            cost += costMatrix.matrix[path[i]][path[i+1]];
-        }
-        return cost;
-    }
+
 }
