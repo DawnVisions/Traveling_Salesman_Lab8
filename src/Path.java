@@ -1,9 +1,7 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
-public class Path {
+public class Path{
 
     ArrayList<Integer> vertices;
     public double cost;
@@ -36,21 +34,19 @@ public class Path {
         System.out.println(" } Cost = " + cost);
     }
 
+    //  Rotates the path so that it begins and ends at 0
     public void rotatePath()
     {
-        this.printPath();
         int locationOfZero = vertices.indexOf(0);
-        System.out.println(locationOfZero);
         Collections.rotate(vertices, locationOfZero*(-1));
         vertices.add(0);
-        this.printPath();
     }
 
     public double calculatePathCost(CostMatrix costMatrix) {
         double cost = 0;
-        for ( int i = 0; i<vertices.size()-1; i++)
+        for (int i = 0; i<vertices.size()-1; i++)
         {
-            cost += costMatrix.matrix[vertices.get(i)][vertices.get(i)];
+            cost += costMatrix.matrix[vertices.get(i)][vertices.get(i+1)];
         }
         this.cost = Math.floor(cost*100)/100;
         return this.cost;

@@ -5,7 +5,7 @@ import java.util.Collections;
 public class CostMatrix {
 
     int numberVertices;
-    double matrix[][];
+    public double matrix[][];
     Point[] vertices;
     Path correctForCircular;
 

@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -32,6 +31,7 @@ public class Brute_Force {
                 if (calculateArrayPathCost(path, costMatrix) < cost)
                 {
                     currentShortest = path.clone();
+                    cost = calculateArrayPathCost(path, costMatrix);
                 }
                 indexes[i]++;
                 i = 0;
@@ -42,13 +42,12 @@ public class Brute_Force {
             }
         }
 
-        //  Create new Path from currentShortest array
+        //  Create and return a new Path from currentShortest array
         ArrayList<Integer> list = new ArrayList<>();
         for(int j = 0; j<currentShortest.length; j++)
         {
             list.add(currentShortest[j]);
         }
-
         return new Path(list, costMatrix);
     }
 

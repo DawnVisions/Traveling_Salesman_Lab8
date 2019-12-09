@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -17,7 +19,11 @@ public class Testing {
 
     public static void main(String[] args) {
 
-        Correctness.circularCorrectness(Brute_Force::TSP);
+        ArrayList<Integer> set = new ArrayList<Integer>(Arrays.asList(2,5,8,9,10));
+        Integer num = Dynamic_Programming.setToInteger(set);
+        System.out.println(num);
+        System.out.println(Dynamic_Programming.binaryIntegerToSet(num));
+
         // run the whole experiment at least twice, and expect to throw away the data from the earlier runs, before java has fully optimized
         //runFullExperiment("BruteForceLCS-Exp1-ThrowAway.txt");
         //runFullExperiment("BruteForceLCS-Exp2.txt");
