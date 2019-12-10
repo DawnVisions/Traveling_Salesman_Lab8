@@ -25,6 +25,11 @@ public class Path{
         cost = this.calculatePathCost(matrix);
     }
 
+    public Path(ArrayList<Integer> vertices, double cost) {
+        this.vertices = vertices;
+        this.cost = cost;
+    }
+
     public void printPath() {
         System.out.print("{ " + vertices.get(0));
         for (int i = 1; i < vertices.size(); i++)
