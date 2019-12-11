@@ -31,13 +31,13 @@ public class Greedy {
                 }
             }
             path.vertices.add(nextVertex);
+            path.cost += costMatrix.matrix[currentVertex][nextVertex];
             toVisit.remove(indexOfNext);
             currentVertex = nextVertex;
         }
         path.vertices.add(0);
+        path.cost += costMatrix.matrix[currentVertex][0];
 
-        //   Calculate cost and return path
-        path.calculatePathCost(costMatrix);
         return path;
     }
 

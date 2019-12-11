@@ -85,6 +85,8 @@ public class CostMatrix {
         }
         //  Calculate the distance between each vertex
         pointToPointDistancesToMatrix();
+        correctForCircular.rotatePath();
+        correctForCircular.calculatePathCost(matrix);
     }
 
     public void printMatrix()

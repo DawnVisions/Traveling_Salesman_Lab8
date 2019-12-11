@@ -25,14 +25,13 @@ public class Dynamic_Programming {
                 if(solutionTable[i][j] == null)
                     System.out.print(" 0.0 ");
                 else
-                    System.out.print(solutionTable[i][j].cost + " ");
+                    System.out.printf("%4.1f ", solutionTable[i][j].cost);
             }
 
             System.out.println();
         }*/
         path.vertices.add(0);
         path.vertices.add(0,0);
-        path.printPath();
         return path;
     }
 
@@ -40,9 +39,8 @@ public class Dynamic_Programming {
         //        if ( subSolutionTable contains a solution for the startNode, tourNodes ) then
         //        return the solution from the table
         if (solutionTable[startNode][setToInteger(tourNodes)] != null) {
-            double cost = solutionTable[startNode][setToInteger(tourNodes)].cost;
-            Path path = new Path(tourNodes,cost);
-            return path;
+            Path path = solutionTable[startNode][setToInteger(tourNodes)];
+            return new Path((ArrayList<Integer>) path.vertices.clone(), path.cost);
         }
         if (tourNodes.size() == 1) {
             //        cost: edgeCosts[startNode][tourNode] + edgeCosts[tourNode][endNode]
@@ -69,15 +67,15 @@ public class Dynamic_Programming {
                 //            make best path so far { k --> tmpPath }
                 if (tempPath.cost < bestSoFar.cost)
                 {
-                    tempPath.vertices.add(0,node);
-                    bestSoFar.vertices = tempPath.vertices;
+                    bestSoFar.vertices = (ArrayList<Integer>) tempPath.vertices.clone();
+                    bestSoFar.vertices.add(0,node);
                     bestSoFar.cost = tempPath.cost;
                 }
             }
             //        save solution in table (indexed by startNode, tourNodes set)
             //        return solution
             solutionTable[startNode][setToInteger(tourNodes)] = bestSoFar;
-            return bestSoFar;
+            return new Path(bestSoFar.vertices, bestSoFar.cost);
         }
     }
 

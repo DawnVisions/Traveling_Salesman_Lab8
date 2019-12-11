@@ -20,11 +20,6 @@ public class Path{
         }
     }
 
-    public Path(ArrayList<Integer> vertices, CostMatrix matrix) {
-        this.vertices = vertices;
-        cost = this.calculatePathCost(matrix);
-    }
-
     public Path(ArrayList<Integer> vertices, double cost) {
         this.vertices = vertices;
         this.cost = cost;
@@ -47,11 +42,11 @@ public class Path{
         vertices.add(0);
     }
 
-    public double calculatePathCost(CostMatrix costMatrix) {
+    public double calculatePathCost(double[][] matrix) {
         double cost = 0;
         for (int i = 0; i<vertices.size()-1; i++)
         {
-            cost += costMatrix.matrix[vertices.get(i)][vertices.get(i+1)];
+            cost += matrix[vertices.get(i)][vertices.get(i+1)];
         }
         this.cost = Math.floor(cost*100)/100;
         return this.cost;
