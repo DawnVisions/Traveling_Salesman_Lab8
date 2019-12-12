@@ -48,7 +48,6 @@ public class Brute_Force {
         {
             list.add(currentShortest[j]);
         }
-
         return new Path(list, cost);
     }
 

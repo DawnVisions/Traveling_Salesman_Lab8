@@ -11,9 +11,15 @@ public class Correctness {
 
     @Test
     void circularCorrectnessForBruteForce() {
-        CostMatrix costMatrix = Testing.GenerateCircularGraphCostMatrix(12, 20);
+        CostMatrix costMatrix = Testing.GenerateCircularGraphCostMatrix(12, 100);
+        System.out.println("Cost matrix: ");
+        costMatrix.printMatrix();
         Path expectedPath = costMatrix.correctForCircular;
         Path actualPath = Brute_Force.TSP(costMatrix);
+        System.out.print("Expected path: ");
+        expectedPath.printPath();
+        System.out.print("Actual path:   ");
+        actualPath.printPath();
         Boolean firstCheck = expectedPath.vertices.equals(actualPath.vertices);
         Collections.reverse(expectedPath.vertices);
         Boolean reversedCheck = expectedPath.vertices.equals(actualPath.vertices);
@@ -101,10 +107,16 @@ public class Correctness {
 
     @Test
     void circularCorrectnessForDynamicProgramming() {
-        CostMatrix costMatrix = Testing.GenerateCircularGraphCostMatrix(12, 20);
+        CostMatrix costMatrix = Testing.GenerateCircularGraphCostMatrix(12, 100);
+        System.out.println("Cost matrix: ");
+        costMatrix.printMatrix();
         Path expectedPath = costMatrix.correctForCircular;
+        System.out.print("Expected path: ");
+        expectedPath.printPath();
+        System.out.print("Actual path:   ");
         Dynamic_Programming dp = new Dynamic_Programming();
         Path actualPath = dp.TSP(costMatrix);
+        actualPath.printPath();
         Boolean firstCheck = expectedPath.vertices.equals(actualPath.vertices);
         Collections.reverse(expectedPath.vertices);
         Boolean reversedCheck = expectedPath.vertices.equals(actualPath.vertices);
@@ -150,5 +162,43 @@ public class Correctness {
         Path actualPath = dp.TSP(matrix);
 
         assertEquals(reversedExpectedPath, actualPath.vertices);
+    }
+
+    @Test
+    void circularCorrectnessForGreedy() {
+        CostMatrix costMatrix = Testing.GenerateCircularGraphCostMatrix(40, 100);
+        System.out.println("Cost matrix: ");
+        costMatrix.printMatrix();
+        Path expectedPath = costMatrix.correctForCircular;
+        Path actualPath = Greedy.TSP(costMatrix);
+        System.out.print("Expected path: ");
+        expectedPath.printPath();
+        System.out.print("Actual path:   ");
+        actualPath.printPath();
+        Boolean firstCheck = expectedPath.vertices.equals(actualPath.vertices);
+        Collections.reverse(expectedPath.vertices);
+        Boolean reversedCheck = expectedPath.vertices.equals(actualPath.vertices);
+        assertTrue(firstCheck || reversedCheck);
+    }
+
+    @Test
+    void checkExactAlgorithmsAgainstEachother()
+    {
+        for(int i = 2; i< 14; i++)
+        {
+            CostMatrix costMatrix = Testing.GenerateRandomCostMatrix(i,25);
+            Path brutePath = Brute_Force.TSP(costMatrix);
+            System.out.print("Brute Force:         ");
+            brutePath.printPath();
+            Dynamic_Programming dp = new Dynamic_Programming();
+            Path dynamicPath = dp.TSP(costMatrix);
+            System.out.print("Dynamic Programming: ");
+            dynamicPath.printPath();
+            Boolean firstCheck = dynamicPath.vertices.equals(brutePath.vertices);
+            Collections.reverse(dynamicPath.vertices);
+            Boolean reversedCheck = dynamicPath.vertices.equals(brutePath.vertices);
+            System.out.println();
+            assertTrue(firstCheck || reversedCheck);
+        }
     }
 }

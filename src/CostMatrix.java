@@ -69,6 +69,7 @@ public class CostMatrix {
             double radian = currentAngle*Math.PI/180;
             double x = Math.cos(radian)*radius;
             double y = Math.sin(radian)*radius;
+            System.out.println("Vertex " + i + ": (" + Math.round(x) + ", " + Math.round(y) +")");
             sortedVertices.add(new Vertex((int) Math.round(x), (int)Math.round(y), i));
             currentAngle += angle;
         }
@@ -91,20 +92,20 @@ public class CostMatrix {
 
     public void printMatrix()
     {
-        System.out.print("  ");
+        System.out.print("   ");
         for(int i = 0; i< numberVertices; i++)
         {
-            System.out.printf("%5d", i);
+            System.out.printf("%5d   ", i);
         }
         System.out.println();
         String line = "-";
-        System.out.println(line.repeat(numberVertices*6));
+        System.out.println(line.repeat(numberVertices*8));
         for (int i = 0; i< numberVertices; i++)
         {
-            System.out.print(i + " | ");
+            System.out.printf("%2d| ", i);
             for(int j = 0; j<numberVertices;j++)
             {
-                System.out.printf("%4.1f ", matrix[i][j]);
+                System.out.printf(" %05.1f |", matrix[i][j]);
             }
             System.out.println();
         }

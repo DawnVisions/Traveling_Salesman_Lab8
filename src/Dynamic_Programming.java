@@ -7,16 +7,22 @@ public class Dynamic_Programming {
 
     public Path TSP(CostMatrix costMatrix)
     {
+        //  Initialize cost matrix and solution table
         this.costMatrix = costMatrix;
         this.matrix = costMatrix.matrix;
         solutionTable = new Path[costMatrix.numberVertices][(int)Math.pow(2,costMatrix.numberVertices)];
 
+        //  Initialize list of tourNodes to visit  1 -> 2 -> 3 -> ... -> N
         ArrayList<Integer> tourNodes = new ArrayList<>();
         for(int i = 1; i< costMatrix.numberVertices; i++)
         {
             tourNodes.add(i);
         }
+
+        //  Call recursive function to find shortest path
         Path path = recursiveTSP(0,tourNodes);
+
+        //  Print solution table for testing purposes
 /*        for(int i = 0; i< costMatrix.numberVertices; i++)
         {
             System.out.print(i+ ": ");
@@ -30,6 +36,8 @@ public class Dynamic_Programming {
 
             System.out.println();
         }*/
+
+        //  Add 0 to the beginning and end of the path, return shortest path
         path.vertices.add(0);
         path.vertices.add(0,0);
         return path;
@@ -79,6 +87,8 @@ public class Dynamic_Programming {
         }
     }
 
+    //  Method which turns a set of numbers into an integer
+    //  Uses binary digit 1 at a given index to represent that the number is in the set
     static int setToInteger(ArrayList<Integer> set)
     {
         int number = 0;
@@ -86,10 +96,10 @@ public class Dynamic_Programming {
         {
             number += Math.pow(2, node-1);
         }
-
         return number;
     }
 
+    //   Opposite of setToInteger
     static ArrayList<Integer> binaryIntegerToSet(int number)
     {
         ArrayList<Integer> set = new ArrayList<>();
